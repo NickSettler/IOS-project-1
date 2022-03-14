@@ -18,6 +18,7 @@ GZ_FILES=
 
 ALLOWED_COMMANDS=("infected" "merge" "gender" "age" "daily" "monthly" "yearly" "countries" "districts" "regions")
 ALLOWED_GENDERS=("M" "Z")
+AGE_GROUPS=("0-5" "6-15" "16-25" "26-35" "36-45" "46-55" "56-65" "66-75" "76-85" "86-95" "96-105" "105-1000")
 
 usage() {
   echo "Usage: $0 [-h] [FILTERS] [COMMAND] [LOG [LOG2 [...]]"
@@ -147,6 +148,27 @@ process_gender() {
   local data="$1"
 
   awk -F "," '{print $4}' <<<"$data" | sort | uniq -c | awk -F " " '{print $2": " $1}'
+}
+
+process_age() {
+  local min_age max_age count data="$1"
+
+  for i in "${AGE_GROUPS[@]}"
+  do
+    min_age=$(awk -F "-" '{print $1}' <<<"$i")
+    max_age=$(awk -F "-" '{print $2}' <<<"$i")
+
+    count=$(awk -F "," -v min_age="$min_age" -v max_age="$max_age" \
+      '{if($3 != ""){if($3 >= min_age && $3 <= max_age){print}}}' <<<"$data" | awk "END{print NR}")
+
+    if [ "$i" != "105-1000" ]; then
+      awk -F " " "{printf \"%-6s: %s\n\", \"$i\", \$1}" <<<"$count"
+    else
+      awk -F " " "{printf \"%-6s: %s\n\", \">105\", \$1}" <<<"$count"
+    fi
+  done
+
+  awk -F "," '{if($3 == ""){print "None"}}' <<<"$data" | uniq -c | awk -F " " '{print "None  : " $1}'
 }
 
 process_daily() {
