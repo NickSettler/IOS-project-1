@@ -68,11 +68,7 @@ while [ "$#" -gt 0 ]; do
     ;;
   *)
     # check if command is allowed and set it
-    contains "$1" "${ALLOWED_COMMANDS[@]}"
-    if ! contains "$1" "${ALLOWED_COMMANDS[@]}"; then
-      usage
-      exit 0
-    else
+    if contains "$1" "${ALLOWED_COMMANDS[@]}"; then
       COMMAND="$1"
       shift
     fi
@@ -81,11 +77,13 @@ while [ "$#" -gt 0 ]; do
       FILES+=("/dev/stdin")
     else
       while :; do
-        if [[ "$1" =~ \.gz$ ]]; then
-          GZ_ENABLED=1
-          GZ_FILES+=("$1")
-        else
-          FILES+=("$1")
+        if [ -f "$1" ]; then
+          if [[ "$1" =~ \.gz$ ]]; then
+            GZ_ENABLED=1
+            GZ_FILES+=("$1")
+          else
+            FILES+=("$1")
+          fi
         fi
         shift
 
