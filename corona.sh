@@ -169,8 +169,7 @@ process_gender() {
 process_age() {
   local min_age max_age count data="$1"
 
-  for i in "${AGE_GROUPS[@]}"
-  do
+  for i in "${AGE_GROUPS[@]}"; do
     min_age=$(awk -F "-" '{print $1}' <<<"$i")
     max_age=$(awk -F "-" '{print $2}' <<<"$i")
 
@@ -196,36 +195,36 @@ process_daily() {
 process_monthly() {
   local data="$1"
 
-  echo "$data" | awk -F "," '{print $2}' | sort | sed -E 's/([0-9]{4})-([0-9]{2})-([0-9]{2})/\1-\2/g' \
-    | uniq -c | awk -F " " '{print $2": " $1}'
+  echo "$data" | awk -F "," '{print $2}' | sort | sed -E 's/([0-9]{4})-([0-9]{2})-([0-9]{2})/\1-\2/g' |
+    uniq -c | awk -F " " '{print $2": " $1}'
 }
 
 process_yearly() {
   local data="$1"
 
-  echo "$data" | awk -F "," '{print $2}' | sort | sed -E 's/([0-9]{4})-([0-9]{2})-([0-9]{2})/\1/g' \
-    | uniq -c | awk -F " " '{print $2": " $1}'
+  echo "$data" | awk -F "," '{print $2}' | sort | sed -E 's/([0-9]{4})-([0-9]{2})-([0-9]{2})/\1/g' |
+    uniq -c | awk -F " " '{print $2": " $1}'
 }
 
 process_countries() {
   local data="$1"
 
-  awk -F "," '{if($8 != ""){if($8 != "CZ"){print $8}}else{print "None"}}' <<<"$data" \
-    | sort | uniq -c | awk -F " " '{print $2": " $1}'
+  awk -F "," '{if($8 != ""){if($8 != "CZ"){print $8}}else{print "None"}}' <<<"$data" |
+    sort | uniq -c | awk -F " " '{print $2": " $1}'
 }
 
 process_districts() {
   local data="$1"
 
-  awk -F "," '{if($6 != ""){print $6}else{print "None"}}' <<<"$data" \
-    | sort | uniq -c | awk -F " " '{print $2": " $1}'
+  awk -F "," '{if($6 != ""){print $6}else{print "None"}}' <<<"$data" |
+    sort | uniq -c | awk -F " " '{print $2": " $1}'
 }
 
 process_regions() {
   local data="$1"
 
-  awk -F "," '{if($5 != ""){print $5}else{print "None"}}' <<<"$data" \
-    | sort | uniq -c | awk -F " " '{print $2": " $1}'
+  awk -F "," '{if($5 != ""){print $5}else{print "None"}}' <<<"$data" |
+    sort | uniq -c | awk -F " " '{print $2": " $1}'
 }
 
 csv_array="$(process_files)"
