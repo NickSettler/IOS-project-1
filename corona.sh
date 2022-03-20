@@ -1,12 +1,6 @@
 #!/usr/bin/env bash
 
-filename="osoby-short.csv"
-
 # csv structure: id,datum,vek,pohlavi,kraj_nuts_kod,okres_lau_kod,nakaza_v_zahranici,nakaza_zeme_csu_kod,reportovano_khs
-
-csv_file=$(<$filename)
-csv_array="($csv_file)"
-csv_array=${csv_array#*$'\n'}
 
 AFTER_DATE=
 BEFORE_DATE=
