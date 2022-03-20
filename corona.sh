@@ -121,6 +121,24 @@ echo "AFTER_DATE: ${AFTER_DATE}"
 echo "BEFORE_DATE: ${BEFORE_DATE}"
 echo "GENDER: ${GENDER}"
 
+process_files() {
+  local line data
+
+  for FILE in "${FILES[@]}"; do
+    FILE="$(echo "$FILE" | xargs)"
+    if [[ -n "$FILE" ]]; then
+      {
+        read -r line
+        while read -r line || [ -n "$line" ]; do
+          data="$(printf "%s\n%s" "$data" "$line")"
+        done
+      } <"$FILE"
+    fi
+  done
+
+  echo "$data"
+}
+
 filter_data() {
   local data="$1"
 
@@ -210,6 +228,7 @@ process_regions() {
     | sort | uniq -c | awk -F " " '{print $2": " $1}'
 }
 
+csv_array="$(process_files)"
 csv_array="$(filter_data "$csv_array")"
 #validate_data "$csv_array"
 process_infected "$csv_array"
