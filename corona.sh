@@ -145,7 +145,11 @@ filter_data() {
 validate_data() {
   local data="$1"
 
-  echo "$data" | awk -F "," '{if(! date -d $2){print $2}}'
+#  if ! gdate "+YYYY-MM-DD" -d "2000-11-14" >/dev/null 2>&1; then
+#    echo "ER"
+#  fi
+#
+#  awk -F "," '{print $2}' <<<"$data" | sed -e '//'
 }
 
 process_infected() {
@@ -224,8 +228,9 @@ process_regions() {
 csv_array="$(process_files)"
 csv_array="$(filter_data "$csv_array")"
 #validate_data "$csv_array"
-process_infected "$csv_array"
+#process_infected "$csv_array"
 #process_gender "$csv_array"
+#process_age "$csv_array"
 #process_daily "$csv_array"
 #process_monthly "$csv_array"
 #process_yearly "$csv_array"
