@@ -169,13 +169,23 @@ filter_data() {
 }
 
 validate_data() {
-  local data="$1"
+  local date age data="$1"
 
-#  if ! gdate "+YYYY-MM-DD" -d "2000-11-14" >/dev/null 2>&1; then
-#    echo "ER"
-#  fi
-#
-#  awk -F "," '{print $2}' <<<"$data" | sed -e '//'
+  data=$(echo "$data" | sed -r '/^\s*$/d')
+  data=$(echo "$data" | awk -F '[[:blank:]]*,[[:blank:]]*' -v OFS=, '{gsub(/^[[:blank:]]+|[[:blank:]]+$/, ""); $1=$1} 1')
+
+  for line in $data; do
+    date="$(echo "$line" | awk -F ',' '{print $2}')"
+    age="$(echo "$line" | awk -F ',' '{print $3}' | bc -l)"
+
+    if ! gdate "+%Y-%m-%d" -d "$date" >/dev/null 2>&1; then
+      echo "Invalid date: $line" >&2
+    elif (( $(echo "$age <= 0" | bc -l) )); then
+      echo "Invalid age: $line" >&2
+    else
+      echo "$line"
+    fi
+  done
 }
 
 process_infected() {
