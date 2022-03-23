@@ -9,8 +9,12 @@ COMMAND=
 FILES=
 GZ_ENABLED=0
 GZ_FILES=
+HISTOGRAM_ENABLED=0
+HISTOGRAM_WIDTH=
 
 ALLOWED_COMMANDS=("infected" "merge" "gender" "age" "daily" "monthly" "yearly" "countries" "districts" "regions")
+HISTOGRAM_COMMANDS=(  "gender"  "age" "daily" "monthly" "yearly"  "countries" "districts" "regions")
+HISTOGRAM_WIDTHS=(    100000    10000 500     10000     100000    100         1000        10000)
 ALLOWED_GENDERS=("M" "Z")
 AGE_GROUPS=("0-5" "6-15" "16-25" "26-35" "36-45" "46-55" "56-65" "66-75" "76-85" "86-95" "96-105" "105-1000")
 
@@ -70,6 +74,15 @@ while [ "$#" -gt 0 ]; do
   -g)
     GENDER="$2"
     shift 2
+    ;;
+  -s)
+    HISTOGRAM_ENABLED=1
+    if [[ $2 =~ [0-9]+$ ]]; then
+      HISTOGRAM_WIDTH=$2
+      shift 2
+    else
+      shift
+    fi
     ;;
   *)
     # check if command is allowed and set it
