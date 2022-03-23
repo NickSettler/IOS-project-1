@@ -133,11 +133,13 @@ fi
 if [ "${GZ_ENABLED}" -eq 1 ]; then
   echo "GZ_FILES: ${GZ_FILES[*]}"
 fi
-echo "FILES: ${FILES[*]}"
-echo "COMMAND: ${COMMAND}"
-echo "AFTER_DATE: ${AFTER_DATE}"
-echo "BEFORE_DATE: ${BEFORE_DATE}"
-echo "GENDER: ${GENDER}"
+#echo "FILES: ${FILES[*]}"
+#echo "COMMAND: ${COMMAND}"
+#echo "AFTER_DATE: ${AFTER_DATE}"
+#echo "BEFORE_DATE: ${BEFORE_DATE}"
+#echo "GENDER: ${GENDER}"
+#echo "HISTOGRAM: ${HISTOGRAM_ENABLED}"
+#echo "WIDTH: ${HISTOGRAM_WIDTH}"
 
 process_files() {
   local line data
