@@ -220,6 +220,34 @@ run_command() {
   fi
 }
 
+process_histogram() {
+  local max max_signs sign_value data="$1"
+
+  if ! contains "$COMMAND" "${HISTOGRAM_COMMANDS[@]}"; then
+    echo "$data"
+    return
+  fi
+
+  max=$(echo "$data" | awk -F ':' '{print $2}' | sort -n | tail -n 1)
+  sign_value="${HISTOGRAM_WIDTHS[$(index "$COMMAND" "${HISTOGRAM_COMMANDS[@]}")]}"
+
+  if [[ -n "$HISTOGRAM_WIDTH" ]]; then
+    sign_value=$(echo "($max / $HISTOGRAM_WIDTH) / 1" | bc)
+  fi
+
+  max_signs=$(echo "($max / $sign_value) / 1" | bc)
+
+  if [[ "$max_signs" -le 0 ]]; then
+    max_signs="$max"
+    sign_value=1
+  fi
+
+  echo "$data" | awk -F ": " -v sign="$sign_value" -v m="$max_signs" 'BEGIN { s=sprintf(sprintf("%%%ds", m),""); gsub(/ /,"#",s) }
+    {
+      printf("%s: %.*s\n", $1, int($2/sign), s)
+    }'
+}
+
 
 process_infected() {
   local data="$1"
@@ -306,3 +334,7 @@ csv_array="$(process_files)"
 csv_array="$(validate_data "$csv_array")"
 csv_array="$(filter_data "$csv_array")"
 csv_array="$(run_command "$csv_array")"
+if [[ "$HISTOGRAM_ENABLED" -eq 1 ]]; then
+  csv_array="$(process_histogram "$csv_array")"
+fi
+echo "$csv_array"
