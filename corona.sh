@@ -164,7 +164,7 @@ validate_data() {
 
     if ! gdate "+%Y-%m-%d" -d "$date" >/dev/null 2>&1; then
       echo "Invalid date: $line" >&2
-    elif (( $(echo "$age <= 0" | bc -l) )); then
+    elif (( $(echo "$age < 0" | bc -l) )); then
       echo "Invalid age: $line" >&2
     else
       echo "$line"
