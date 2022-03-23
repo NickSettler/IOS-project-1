@@ -14,6 +14,8 @@ ALLOWED_COMMANDS=("infected" "merge" "gender" "age" "daily" "monthly" "yearly" "
 ALLOWED_GENDERS=("M" "Z")
 AGE_GROUPS=("0-5" "6-15" "16-25" "26-35" "36-45" "46-55" "56-65" "66-75" "76-85" "86-95" "96-105" "105-1000")
 
+HEADER="id,datum,vek,pohlavi,kraj_nuts_kod,okres_lau_kod,nakaza_v_zahranici,nakaza_zeme_csu_kod,reportovano_khs"
+
 usage() {
   echo "Usage: $0 [-h] [FILTERS] [COMMAND] [LOG [LOG2 [...]]"
   echo "  -h      display this help and exit"
