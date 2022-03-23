@@ -130,9 +130,9 @@ if [ -n "$GENDER" ]; then
   fi
 fi
 
-if [ "${GZ_ENABLED}" -eq 1 ]; then
-  echo "GZ_FILES: ${GZ_FILES[*]}"
-fi
+#if [ "${GZ_ENABLED}" -eq 1 ]; then
+#  echo "GZ_FILES: ${GZ_FILES[*]}"
+#fi
 #echo "FILES: ${FILES[*]}"
 #echo "COMMAND: ${COMMAND}"
 #echo "AFTER_DATE: ${AFTER_DATE}"
