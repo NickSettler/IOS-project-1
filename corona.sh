@@ -96,7 +96,7 @@ while [ "$#" -gt 0 ]; do
     else
       while :; do
         if [ -f "$1" ]; then
-          if [[ "$1" =~ \.gz$ ]]; then
+          if [[ "$1" =~ \.gz$ || "$1" =~ \.bz2$ ]]; then
             GZ_ENABLED=1
             GZ_FILES+=("$1")
           else
@@ -142,12 +142,26 @@ fi
 #echo "WIDTH: ${HISTOGRAM_WIDTH}"
 
 process_files() {
-  local data=""
+  local filename extension data=""
 
   for FILE in "${FILES[@]}"; do
     data+=$(cat "$FILE" | tail -n +2)
     data+=$'\n'
   done
+
+  if [[ "$GZ_ENABLED" -eq 1 ]]; then
+    for FILE in "${GZ_FILES[@]}"; do
+      filename=$(basename "$FILE")
+      extension="${filename##*.}"
+
+      if [[ "$extension" == "gz" ]]; then
+        data+=$(cat "$FILE" | gzip -d | tail -n +2)
+      elif [[ "$extension" == "bz2" ]]; then
+        data+=$(cat "$FILE" | bzip2 -d | tail -n +2)
+      fi
+      data+=$'\n'
+    done
+  fi
 
   echo "$data"
 }
