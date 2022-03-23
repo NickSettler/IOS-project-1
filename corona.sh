@@ -234,6 +234,13 @@ process_infected() {
   awk -F "," 'END{print NR}' <<<"$data"
 }
 
+process_merge() {
+  local data="$1"
+
+  echo "$HEADER"
+  echo "$data"
+}
+
 process_gender() {
   local data="$1"
 
@@ -263,7 +270,8 @@ process_age() {
 process_daily() {
   local data="$1"
 
-  wc -l <<<"$data"
+  echo "$data" | awk -F "," '{print $2}' | sort | sed -E 's/([0-9]{4})-([0-9]{2})-([0-9]{2})/\1-\2-\3/g' |
+    uniq -c | awk -F " " '{print $2": " $1}'
 }
 
 process_monthly() {
