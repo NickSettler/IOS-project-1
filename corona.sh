@@ -41,6 +41,15 @@ contains() {
   return 1
 }
 
+index() {
+  local i=0
+  for element in "${@:2}"; do
+    [[ "$element" == "$1" ]] && echo "$i" && return
+    ((i++))
+  done
+  echo -1
+}
+
 # parse arguments
 while [ "$#" -gt 0 ]; do
   case "$1" in
