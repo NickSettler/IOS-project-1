@@ -251,14 +251,12 @@ process_histogram() {
 
   max_signs=$(echo "($max / $sign_value) / 1" | bc)
 
-  if [[ "$max_signs" -le 0 ]]; then
-    max_signs="$max"
-    sign_value=1
-  fi
-
   echo "$data" | awk -F ": " -v sign="$sign_value" -v m="$max_signs" 'BEGIN { s=sprintf(sprintf("%%%ds", m),""); gsub(/ /,"#",s) }
     {
-      printf("%s: %.*s\n", $1, int($2/sign), s)
+      if (sign == 0)
+        printf("%s:\n", $1);
+     else
+        printf("%s: %.*s\n", $1, int($2/sign), s);
     }'
 }
 
