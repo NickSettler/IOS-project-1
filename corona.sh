@@ -159,15 +159,6 @@ process_files() {
   echo "$data"
 }
 
-filter_data() {
-  local data="$1"
-
-  data=$(echo "$data" | awk -F "," -v after="$AFTER_DATE" '{if(after != ""){if(after <= $2){print}}else{print}}')
-  data=$(echo "$data" | awk -F "," -v before="$BEFORE_DATE" '{if(before != ""){if(before >= $2){print}}else{print}}')
-  data=$(echo "$data" | awk -F "," -v gender="$GENDER" '{if(gender != ""){if(gender == $4){print}}else{print}}')
-  echo "$data"
-}
-
 validate_data() {
   local date age data="$1"
 
@@ -187,6 +178,55 @@ validate_data() {
     fi
   done
 }
+
+filter_data() {
+  local data="$1"
+
+  data=$(echo "$data" | awk -F "," -v after="$AFTER_DATE" '{if(after != ""){if(after <= $2){print}}else{print}}')
+  data=$(echo "$data" | awk -F "," -v before="$BEFORE_DATE" '{if(before != ""){if(before >= $2){print}}else{print}}')
+  data=$(echo "$data" | awk -F "," -v gender="$GENDER" '{if(gender != ""){if(gender == $4){print}}else{print}}')
+  echo "$data"
+}
+
+run_command() {
+  local data="$1"
+
+  if [[ -n "$COMMAND" ]]; then
+    case "$COMMAND" in
+    infected)
+      process_infected "$data"
+      ;;
+    merge)
+      process_merge "$data"
+      ;;
+    gender)
+      process_gender "$data"
+      ;;
+    age)
+      process_age "$data"
+      ;;
+    daily)
+      process_daily "$data"
+      ;;
+    monthly)
+      process_monthly "$data"
+      ;;
+    yearly)
+      process_yearly "$data"
+      ;;
+    countries)
+      process_countries "$data"
+      ;;
+    districts)
+      process_districts "$data"
+      ;;
+    regions)
+      process_regions "$data"
+      ;;
+    esac
+  fi
+}
+
 
 process_infected() {
   local data="$1"
@@ -262,14 +302,6 @@ process_regions() {
 }
 
 csv_array="$(process_files)"
+csv_array="$(validate_data "$csv_array")"
 csv_array="$(filter_data "$csv_array")"
-#validate_data "$csv_array"
-#process_infected "$csv_array"
-#process_gender "$csv_array"
-#process_age "$csv_array"
-#process_daily "$csv_array"
-#process_monthly "$csv_array"
-#process_yearly "$csv_array"
-#process_countries "$csv_array"
-#process_districts "$csv_array"
-#process_regions "$csv_array"
+csv_array="$(run_command "$csv_array")"
