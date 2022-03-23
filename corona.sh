@@ -6,9 +6,9 @@ AFTER_DATE=
 BEFORE_DATE=
 GENDER=
 COMMAND=
-FILES=
+FILES=()
 GZ_ENABLED=0
-GZ_FILES=
+GZ_FILES=()
 HISTOGRAM_ENABLED=0
 HISTOGRAM_WIDTH=
 
@@ -142,18 +142,11 @@ fi
 #echo "WIDTH: ${HISTOGRAM_WIDTH}"
 
 process_files() {
-  local line data
+  local data=""
 
   for FILE in "${FILES[@]}"; do
-    FILE="$(echo "$FILE" | xargs)"
-    if [[ -n "$FILE" ]]; then
-      {
-        read -r line
-        while read -r line || [ -n "$line" ]; do
-          data="$(printf "%s\n%s" "$data" "$line")"
-        done
-      } <"$FILE"
-    fi
+    data+=$(cat "$FILE" | tail -n +2)
+    data+=$'\n'
   done
 
   echo "$data"
