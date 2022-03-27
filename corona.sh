@@ -13,8 +13,8 @@ HISTOGRAM_ENABLED=0
 HISTOGRAM_WIDTH=
 
 ALLOWED_COMMANDS=("infected" "merge" "gender" "age" "daily" "monthly" "yearly" "countries" "districts" "regions")
-HISTOGRAM_COMMANDS=(  "gender"  "age" "daily" "monthly" "yearly"  "countries" "districts" "regions")
-HISTOGRAM_WIDTHS=(    100000    10000 500     10000     100000    100         1000        10000)
+HISTOGRAM_COMMANDS=("gender" "age" "daily" "monthly" "yearly" "countries" "districts" "regions")
+HISTOGRAM_WIDTHS=(100000 10000 500 10000 100000 100 1000 10000)
 ALLOWED_GENDERS=("M" "Z")
 AGE_GROUPS=("0-5" "6-15" "16-25" "26-35" "36-45" "46-55" "56-65" "66-75" "76-85" "86-95" "96-105" "105-1000")
 
@@ -118,7 +118,7 @@ if [[ ${#FILES[@]} -eq 0 ]] && [[ "${GZ_ENABLED}" -eq 0 ]]; then
   FILES+=("/dev/stdin")
 fi
 
-if [ "$(gdate -d "$AFTER_DATE" +%s)" -gt "$(gdate -d "$BEFORE_DATE" +%s)" ]; then
+if [ -n "$AFTER_DATE" ] && [ -n "$BEFORE_DATE" ] && [ "$(gdate -d "$AFTER_DATE" +%s)" -gt "$(gdate -d "$BEFORE_DATE" +%s)" ]; then
   echo 'Before date must be before after date' >&2
   exit 1
 fi
@@ -129,17 +129,6 @@ if [ -n "$GENDER" ]; then
     exit 0
   fi
 fi
-
-#if [ "${GZ_ENABLED}" -eq 1 ]; then
-#  echo "GZ_FILES: ${GZ_FILES[*]}"
-#fi
-#echo "FILES: ${FILES[*]}"
-#echo "COMMAND: ${COMMAND}"
-#echo "AFTER_DATE: ${AFTER_DATE}"
-#echo "BEFORE_DATE: ${BEFORE_DATE}"
-#echo "GENDER: ${GENDER}"
-#echo "HISTOGRAM: ${HISTOGRAM_ENABLED}"
-#echo "WIDTH: ${HISTOGRAM_WIDTH}"
 
 process_files() {
   local filename extension data=""
@@ -259,7 +248,6 @@ process_histogram() {
         printf("%s: %.*s\n", $1, int($2/sign), s);
     }'
 }
-
 
 process_infected() {
   local data="$1"
