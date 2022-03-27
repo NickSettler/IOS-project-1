@@ -161,18 +161,41 @@ validate_data() {
   data=$(echo "$data" | sed -r '/^\s*$/d')
   data=$(echo "$data" | awk -F '[[:blank:]]*,[[:blank:]]*' -v OFS=, '{gsub(/^[[:blank:]]+|[[:blank:]]+$/, ""); $1=$1} 1')
 
-  for line in $data; do
-    date="$(echo "$line" | awk -F ',' '{print $2}')"
-    age="$(echo "$line" | awk -F ',' '{print $3}' | bc -l)"
+  data=$(echo "$data" | awk -F "," '{
+    if (split($2, a, "-") == 3) {
+      year=a[1]
+      month=a[2]
+      day=a[3]
+    } else {
+      printf "Invalid date: %s\n", $0 >> "/dev/stderr"
+    }
 
-    if ! gdate "+%Y-%m-%d" -d "$date" >/dev/null 2>&1; then
-      echo "Invalid date: $line" >&2
-    elif (( $(echo "$age < 0" | bc -l) )); then
-      echo "Invalid age: $line" >&2
-    else
-      echo "$line"
-    fi
-  done
+    if (day < 1 || day > 31) {
+      printf "Invalid date: %s\n", $0 >> "/dev/stderr"
+    } else if (month < 1 || month > 12) {
+      printf "Invalid date: %s\n", $0 >> "/dev/stderr"
+    } else if (year < 0) {
+      printf "Invalid date: %s\n", $0 >> "/dev/stderr"
+    } else if (day == 31 && (month == 4 || month == 6 || month == 9 || month == 11)) {
+      printf "Invalid date: %s\n", $0 >> "/dev/stderr"
+    } else if (day >= 30 && month == 2) {
+      printf "Invalid date: %s\n", $0 >> "/dev/stderr"
+    } else if (day == 29 && month == 2 && (year % 4 != 0 || (year % 100 == 0 && year % 400 != 0))) {
+      printf "Invalid date: %s\n", $0 >> "/dev/stderr"
+    } else {
+      print $0
+    }
+  }')
+
+  data=$(echo "$data" | awk -F "," '{
+    if ($3 == "" || $3 ~ /^[0-9]+$/) {
+      print $0
+    } else {
+      printf "Invalid age: %s\n", $0 >> "/dev/stderr"
+    }
+  }')
+
+  echo "$data"
 }
 
 filter_data() {
