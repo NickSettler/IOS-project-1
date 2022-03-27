@@ -162,28 +162,32 @@ validate_data() {
   data=$(echo "$data" | awk -F '[[:blank:]]*,[[:blank:]]*' -v OFS=, '{gsub(/^[[:blank:]]+|[[:blank:]]+$/, ""); $1=$1} 1')
 
   data=$(echo "$data" | awk -F "," '{
-    if (split($2, a, "-") == 3) {
-      year=a[1]
-      month=a[2]
-      day=a[3]
-    } else {
-      printf "Invalid date: %s\n", $0 >> "/dev/stderr"
-    }
-
-    if (day < 1 || day > 31) {
-      printf "Invalid date: %s\n", $0 >> "/dev/stderr"
-    } else if (month < 1 || month > 12) {
-      printf "Invalid date: %s\n", $0 >> "/dev/stderr"
-    } else if (year < 0) {
-      printf "Invalid date: %s\n", $0 >> "/dev/stderr"
-    } else if (day == 31 && (month == 4 || month == 6 || month == 9 || month == 11)) {
-      printf "Invalid date: %s\n", $0 >> "/dev/stderr"
-    } else if (day >= 30 && month == 2) {
-      printf "Invalid date: %s\n", $0 >> "/dev/stderr"
-    } else if (day == 29 && month == 2 && (year % 4 != 0 || (year % 100 == 0 && year % 400 != 0))) {
-      printf "Invalid date: %s\n", $0 >> "/dev/stderr"
-    } else {
+    if ($3 == "") {
       print $0
+    } else {
+      if (split($2, a, "-") == 3) {
+        year=a[1]
+        month=a[2]
+        day=a[3]
+      } else {
+        printf "Invalid date: %s\n", $0 >> "/dev/stderr"
+      }
+
+      if (day < 1 || day > 31) {
+        printf "Invalid date: %s\n", $0 >> "/dev/stderr"
+      } else if (month < 1 || month > 12) {
+        printf "Invalid date: %s\n", $0 >> "/dev/stderr"
+      } else if (year < 0) {
+        printf "Invalid date: %s\n", $0 >> "/dev/stderr"
+      } else if (day == 31 && (month == 4 || month == 6 || month == 9 || month == 11)) {
+        printf "Invalid date: %s\n", $0 >> "/dev/stderr"
+      } else if (day >= 30 && month == 2) {
+        printf "Invalid date: %s\n", $0 >> "/dev/stderr"
+      } else if (day == 29 && month == 2 && (year % 4 != 0 || (year % 100 == 0 && year % 400 != 0))) {
+        printf "Invalid date: %s\n", $0 >> "/dev/stderr"
+      } else {
+        print $0
+      }
     }
   }')
 
