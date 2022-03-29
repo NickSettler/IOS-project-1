@@ -369,8 +369,8 @@ process_yearly() {
 process_countries() {
   local data="$1"
 
-  awk -F "," '{if($8 != ""){if($8 != "CZ"){print $8}}else{print "ZZZZZZZZ"}}' <<<"$data" |
-    LC_ALL=C sort | uniq -c | awk -F " " '{print $2": " $1}' | sed -E "s/Z{8}/None/"
+  awk -F "," '{if($8 != ""){if($8 != "CZ"){print $8}}}' <<<"$data" |
+    LC_ALL=C sort | uniq -c | awk -F " " '{print $2": " $1}'
 }
 
 process_districts() {
