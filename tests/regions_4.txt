@@ -1,4 +1,4 @@
--a 2020-03-20 -b 2020-03-22 regions osoby-short.csv osoby-short.csv.bz2 osoby-short.csv.gz
+./corona -a 2020-03-20 -b 2020-03-22 regions osoby-short.csv osoby-short.csv.bz2 osoby-short.csv.gz
 CZ010: 377
 CZ020: 173
 CZ031: 33

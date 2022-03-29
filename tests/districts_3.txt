@@ -1,4 +1,4 @@
--b 2020-03-22 districts osoby-short.csv osoby-short.csv.bz2 osoby-short.csv.gz
+./corona -b 2020-03-22 districts osoby-short.csv osoby-short.csv.bz2 osoby-short.csv.gz
 CZ0100: 1155
 CZ0201: 57
 CZ0202: 39

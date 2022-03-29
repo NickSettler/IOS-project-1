@@ -1,4 +1,4 @@
-age osoby-short.csv osoby-short.csv.bz2 osoby-short.csv.gz
+./corona age osoby-short.csv osoby-short.csv.bz2 osoby-short.csv.gz
 0-5   : 126
 6-15  : 252
 16-25 : 679

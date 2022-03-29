@@ -1,4 +1,4 @@
-districts osoby-short.csv osoby-short.csv.bz2 osoby-short.csv.gz
+./corona districts osoby-short.csv osoby-short.csv.bz2 osoby-short.csv.gz
 CZ0100: 1878
 CZ0201: 69
 CZ0202: 63

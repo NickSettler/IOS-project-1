@@ -8,10 +8,10 @@ SCRIPT="corona"
 OUTPUT_DIR="tests"
 
 for COMMAND in "${COMMANDS[@]}"; do
-  cmd1="./$SCRIPT $COMMAND $FILES | (echo $COMMAND $FILES && cat) > $OUTPUT_DIR/$COMMAND\"_1.txt\""
-  cmd2="./$SCRIPT -a $AFTER $COMMAND $FILES | (echo -a $AFTER $COMMAND $FILES && cat) > $OUTPUT_DIR/$COMMAND\"_2.txt\""
-  cmd3="./$SCRIPT -b $BEFORE $COMMAND $FILES | (echo -b $BEFORE $COMMAND $FILES && cat) > $OUTPUT_DIR/$COMMAND\"_3.txt\""
-  cmd4="./$SCRIPT -a $AFTER -b $BEFORE $COMMAND $FILES | (echo -a $AFTER -b $BEFORE $COMMAND $FILES && cat) > $OUTPUT_DIR/$COMMAND\"_4.txt\""
+  cmd1="./$SCRIPT $COMMAND $FILES | (echo ./$SCRIPT $COMMAND $FILES && cat) > $OUTPUT_DIR/$COMMAND\"_1.txt\""
+  cmd2="./$SCRIPT -a $AFTER $COMMAND $FILES | (echo ./$SCRIPT -a $AFTER $COMMAND $FILES && cat) > $OUTPUT_DIR/$COMMAND\"_2.txt\""
+  cmd3="./$SCRIPT -b $BEFORE $COMMAND $FILES | (echo ./$SCRIPT -b $BEFORE $COMMAND $FILES && cat) > $OUTPUT_DIR/$COMMAND\"_3.txt\""
+  cmd4="./$SCRIPT -a $AFTER -b $BEFORE $COMMAND $FILES | (echo ./$SCRIPT -a $AFTER -b $BEFORE $COMMAND $FILES && cat) > $OUTPUT_DIR/$COMMAND\"_4.txt\""
 
   echo "$cmd1"
   eval "$cmd1"

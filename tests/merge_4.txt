@@ -1,4 +1,4 @@
--a 2020-03-20 -b 2020-03-22 merge osoby-short.csv osoby-short.csv.bz2 osoby-short.csv.gz
+./corona -a 2020-03-20 -b 2020-03-22 merge osoby-short.csv osoby-short.csv.bz2 osoby-short.csv.gz
 id,datum,vek,pohlavi,kraj_nuts_kod,okres_lau_kod,nakaza_v_zahranici,nakaza_zeme_csu_kod,reportovano_khs
 79b2019f-814b-414b-975a-71067392864d,2020-03-20,25,Z,CZ010,CZ0100,,,1
 3c5356af-3483-42f9-9a51-42865556cf46,2020-03-20,26,M,CZ020,CZ0206,,,1

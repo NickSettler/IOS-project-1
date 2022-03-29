@@ -1,4 +1,4 @@
-daily osoby-short.csv osoby-short.csv.bz2 osoby-short.csv.gz
+./corona daily osoby-short.csv osoby-short.csv.bz2 osoby-short.csv.gz
 2020-03-01: 9
 2020-03-03: 5
 2020-03-04: 3

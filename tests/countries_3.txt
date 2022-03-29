@@ -1,4 +1,4 @@
--b 2020-03-22 countries osoby-short.csv osoby-short.csv.bz2 osoby-short.csv.gz
+./corona -b 2020-03-22 countries osoby-short.csv osoby-short.csv.bz2 osoby-short.csv.gz
 AE: 6
 AT: 252
 BE: 12

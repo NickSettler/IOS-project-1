@@ -10,7 +10,6 @@ done < <(find tests -name '*.txt' -print0)
 for FILE in "${FILES[@]}"; do
   cmd=$(head -n 1 "$FILE")
   expected_output=$(sed 1d "$FILE")
-  cmd="./corona $cmd"
 
   output=$(eval "$cmd")
 

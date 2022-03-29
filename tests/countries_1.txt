@@ -1,4 +1,4 @@
-countries osoby-short.csv osoby-short.csv.bz2 osoby-short.csv.gz
+./corona countries osoby-short.csv osoby-short.csv.bz2 osoby-short.csv.gz
 AE: 6
 AR: 3
 AT: 357
