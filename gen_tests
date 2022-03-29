@@ -1,6 +1,45 @@
 #!/usr/bin/env bash
 
+usage() {
+  echo "Usage: $0 [OPTIONS]"
+  echo "  -h, --help                  Print this help"
+  echo "  -a, --after                 Set after date"
+  echo "  -b, --before                Set before date"
+  echo "  -f, --file, --files         Set files to use for tests generation"
+  echo "                              (example: '-f file1.csv file2.csv')"
+  echo "  -c, --command, --commands   Set commands to use for tests generation"
+  echo "                              (example: '-c infected age merge')"
+  echo "                              To use all commands, use 'all'"
+  echo "  -s, --script                Set script to use for tests generation"
+  echo "  -o, --output                Set output directory"
+  echo "  -t, --task                  Use tests supplied in task"
+}
+
+PREVIOUS_ARG=
+ALLOWED_ARGS=(
+  -h
+  --help
+  -a
+  --after
+  -b
+  --before
+  -f
+  --file
+  --files
+  -c
+  --command
+  --commands
+  -s
+  --script
+  -o
+  --output
+  -t
+  --task
+)
+
+ALLOWED_COMMANDS=("infected" "merge" "gender" "age" "daily" "monthly" "yearly" "countries" "districts" "regions")
 COMMANDS=("infected" "merge" "gender" "age" "daily" "monthly" "yearly" "countries" "districts" "regions")
+
 AFTER="2020-03-20"
 BEFORE="2020-03-22"
 FILES="osoby-short.csv osoby-short.csv.bz2 osoby-short.csv.gz"
