@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+FILES=()
+
+while IFS= read -r -d '' FILE
+do
+  FILES+=("$FILE")
+done < <(find tests -name '*.txt' -print0)
+
+for FILE in "${FILES[@]}"; do
+  cmd=$(head -n 1 "$FILE")
+  expected_output=$(sed 1d "$FILE")
+  cmd="./corona $cmd"
+
+  output=$(eval "$cmd")
+
+  if [ "$output" != "$expected_output" ]; then
+    filename=$(basename -- "$FILE")
+    filename="${filename%.*}"
+
+    echo "Test failed: $FILE"
+    diff -u -i <(echo "$output") <(echo "$expected_output") > "logs/$filename.diff"
+    cmp <(echo "$output") <(echo "$expected_output")
+  else
+    echo "Test passed: $FILE"
+  fi
+done
+
+# FILES[1] contents:
+# age people.csv
+# ...data...
+
+#FILE="${FILES[1]}"
+#
+#cmd=$(head -n 1 "$FILE")
+#cmd="./corona $cmd"
+#echo "Command to run: ${cmd[*]}"
+#output=$(eval "$cmd")
+#echo "$output"

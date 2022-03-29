@@ -1,5 +1,8 @@
 .idea
 
+logs/*
+!logs/.gitkeep
+
 osoby*
 !osoby-short.csv*
 infected-jan22/
