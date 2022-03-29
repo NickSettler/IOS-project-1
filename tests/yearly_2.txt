@@ -1,2 +1,2 @@
 -a 2020-03-20 yearly osoby-short.csv osoby-short.csv.bz2 osoby-short.csv.gz
-2020: 3696
+2020: 3689
