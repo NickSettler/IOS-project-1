@@ -2,6 +2,33 @@
 
 # csv structure: id,datum,vek,pohlavi,kraj_nuts_kod,okres_lau_kod,nakaza_v_zahranici,nakaza_zeme_csu_kod,reportovano_khs
 
+OS=
+
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+  OS="linux"
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+  OS="mac"
+elif [[ "$OSTYPE" == "cygwin" ]]; then
+  OS="cygwin"
+elif [[ "$OSTYPE" == "msys" ]]; then
+  OS="msys"
+elif [[ "$OSTYPE" == "win32" ]]; then
+  OS="win"
+elif [[ "$OSTYPE" == "freebsd"* ]]; then
+  OS="freebsd"
+else
+  echo "Unknown OS: $OSTYPE" >&2
+  exit 1
+fi
+
+DATE_CMD=
+
+if [[ "$OS" = "mac" ]]; then
+  DATE_CMD="gdate"
+else
+  DATE_CMD="date"
+fi
+
 AFTER_DATE=
 BEFORE_DATE=
 GENDER=
@@ -118,7 +145,7 @@ if [[ ${#FILES[@]} -eq 0 ]] && [[ "${GZ_ENABLED}" -eq 0 ]]; then
   FILES+=("/dev/stdin")
 fi
 
-if [ -n "$AFTER_DATE" ] && [ -n "$BEFORE_DATE" ] && [ "$(gdate -d "$AFTER_DATE" +%s)" -gt "$(gdate -d "$BEFORE_DATE" +%s)" ]; then
+if [ -n "$AFTER_DATE" ] && [ -n "$BEFORE_DATE" ] && [ "$($DATE_CMD -d "$AFTER_DATE" +%s)" -gt "$($DATE_CMD -d "$BEFORE_DATE" +%s)" ]; then
   echo 'Before date must be before after date' >&2
   exit 1
 fi
@@ -164,7 +191,7 @@ validate_data() {
   data=$(echo "$data" | awk -F '[[:blank:]]*,[[:blank:]]*' -v OFS=, '{gsub(/^[[:blank:]]+|[[:blank:]]+$/, ""); $1=$1} 1')
 
   data=$(echo "$data" | awk -F "," '{
-    if ($3 == "") {
+    if ($2 == "") {
       print $0
     } else {
       if (split($2, a, "-") == 3) {
