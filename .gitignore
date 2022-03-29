@@ -1,4 +1,5 @@
 .idea
 
 osoby*
+!osoby-short.csv*
 infected-jan22/

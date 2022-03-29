@@ -1,0 +1,16 @@
+regions osoby-short.csv osoby-short.csv.bz2 osoby-short.csv.gz
+CZ010: 1890
+CZ020: 795
+CZ031: 192
+CZ032: 219
+CZ041: 201
+CZ042: 237
+CZ051: 129
+CZ052: 153
+CZ053: 174
+CZ063: 132
+CZ064: 360
+CZ071: 522
+CZ072: 288
+CZ080: 678
+None: 27

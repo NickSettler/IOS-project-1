@@ -1,0 +1,16 @@
+-a 2020-03-20 regions osoby-short.csv osoby-short.csv.bz2 osoby-short.csv.gz
+CZ010: 1101
+CZ020: 462
+CZ031: 135
+CZ032: 165
+CZ041: 114
+CZ042: 132
+CZ051: 111
+CZ052: 105
+CZ053: 123
+CZ063: 96
+CZ064: 204
+CZ071: 342
+CZ072: 144
+CZ080: 459
+None: 3

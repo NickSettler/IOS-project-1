@@ -1,0 +1,3 @@
+gender osoby-short.csv osoby-short.csv.bz2 osoby-short.csv.gz
+M: 3228
+Z: 2769

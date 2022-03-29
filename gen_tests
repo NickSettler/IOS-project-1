@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+COMMANDS=("infected" "merge" "gender" "age" "daily" "monthly" "yearly" "countries" "districts" "regions")
+AFTER="2020-03-20"
+BEFORE="2020-03-22"
+FILES="osoby-short.csv osoby-short.csv.bz2 osoby-short.csv.gz"
+SCRIPT="corona"
+OUTPUT_DIR="tests"
+
+for COMMAND in "${COMMANDS[@]}"; do
+  cmd1="./$SCRIPT $COMMAND $FILES | (echo $COMMAND $FILES && cat) > $OUTPUT_DIR/$COMMAND\"_1.txt\""
+  cmd2="./$SCRIPT -a $AFTER $COMMAND $FILES | (echo -a $AFTER $COMMAND $FILES && cat) > $OUTPUT_DIR/$COMMAND\"_2.txt\""
+  cmd3="./$SCRIPT -b $BEFORE $COMMAND $FILES | (echo -b $BEFORE $COMMAND $FILES && cat) > $OUTPUT_DIR/$COMMAND\"_3.txt\""
+  cmd4="./$SCRIPT -a $AFTER -b $BEFORE $COMMAND $FILES | (echo -a $AFTER -b $BEFORE $COMMAND $FILES && cat) > $OUTPUT_DIR/$COMMAND\"_4.txt\""
+
+  echo "$cmd1"
+  eval "$cmd1"
+  echo "$cmd2"
+  eval "$cmd2"
+  echo "$cmd3"
+  eval "$cmd3"
+  echo "$cmd4"
+  eval "$cmd4"
+done
