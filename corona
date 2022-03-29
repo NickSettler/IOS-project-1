@@ -185,7 +185,7 @@ process_files() {
 }
 
 validate_data() {
-  local date age data="$1"
+  local data="$1"
 
   data=$(echo "$data" | sed -r '/^\s*$/d')
   data=$(echo "$data" | awk -F '[[:blank:]]*,[[:blank:]]*' -v OFS=, '{gsub(/^[[:blank:]]+|[[:blank:]]+$/, ""); $1=$1} 1')
