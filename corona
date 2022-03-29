@@ -161,7 +161,7 @@ process_files() {
   local filename extension data=""
 
   for FILE in "${FILES[@]}"; do
-    data+=$(< "$FILE" sed '/^\r$/d' | sed '/./!d' | tail -n +2)
+    data+=$(sed <"$FILE" '/^\r$/d' | sed '/./!d' | tail -n +2)
     data+=$'\n'
   done
 
@@ -171,9 +171,9 @@ process_files() {
       extension="${filename##*.}"
 
       if [[ "$extension" == "gz" ]]; then
-        data+=$(< "$FILE" gzip -d | sed '/^\r$/d' | sed '/./!d' | tail -n +2)
+        data+=$(gzip <"$FILE" -d | sed '/^\r$/d' | sed '/./!d' | tail -n +2)
       elif [[ "$extension" == "bz2" ]]; then
-        data+=$(< "$FILE" bzip2 -d | sed '/^\r$/d' | sed '/./!d' | tail -n +2)
+        data+=$(bzip2 <"$FILE" -d | sed '/^\r$/d' | sed '/./!d' | tail -n +2)
       fi
       data+=$'\n'
     done
