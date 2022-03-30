@@ -7,15 +7,6 @@ usage() {
   echo "  -t, --task                  Use tests supplied in task"
 }
 
-ALLOWED_ARGS=(
-  -h
-  --help
-  -s
-  --script
-  -t
-  --task
-)
-
 FILES=()
 SCRIPT=
 USE_TASK=
