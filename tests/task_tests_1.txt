@@ -1,2 +1,0 @@
-./corona infected osoby.csv
-3510360

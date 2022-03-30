@@ -1,3 +1,0 @@
-cat osoby.csv | ./corona gender
-M: 1703679
-Z: 1806681
