@@ -54,6 +54,7 @@ usage() {
   echo "    -a DATETIME     use data after date"
   echo "    -b DATETIME     use data before date"
   echo "    -g GENDER       use data with gender [Z/M]"
+  echo "    -s WIDTH        set max histogram width"
   echo "  COMMAND is one of:"
   echo "    infected        count the number of infected people"
   echo "    merge           merge some files to one"

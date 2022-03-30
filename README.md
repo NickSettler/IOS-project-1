@@ -13,6 +13,7 @@ Usage: ./corona [-h] [FILTERS] [COMMAND] [LOG [LOG2 [...]]
     -a DATETIME     use data after date
     -b DATETIME     use data before date
     -g GENDER       use data with gender [Z/M]
+    -s WIDTH        set max histogram width
   COMMAND is one of:
     infected        count the number of infected people
     merge           merge some files to one
