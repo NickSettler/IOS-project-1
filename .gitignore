@@ -4,6 +4,5 @@ logs/*
 !logs/.gitkeep
 
 osoby*
-!osoby.csv
 !osoby-short.csv*
 infected-jan22/
