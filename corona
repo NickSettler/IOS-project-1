@@ -388,10 +388,12 @@ process_regions() {
 }
 
 csv_array="$(process_files)"
-csv_array="$(validate_data "$csv_array")"
+pre_validated_array=$csv_array
+csv_array="$(validate_data "$csv_array" 2>/dev/null)"
 csv_array="$(filter_data "$csv_array")"
 csv_array="$(run_command "$csv_array")"
 if [[ "$HISTOGRAM_ENABLED" -eq 1 ]]; then
   csv_array="$(process_histogram "$csv_array")"
 fi
 echo "$csv_array"
+validate_data "$pre_validated_array" 1>/dev/null
