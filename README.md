@@ -1,6 +1,6 @@
 # Covid 19 Data Analysis
 
-This is a study project. Created by a student of the [Brno University of Technology](https://www.fit.vutbr.cz/en/) for the course Operating Systems in 2022.
+This is a study project. Created by a student of the [Brno University of Technology](https://www.fit.vut.cz/.en) for the course Operating Systems in 2022.
 
 Script corona is used for data processing and visualization. Data is taken from the [Ministry of Health of the Czech Republic](https://www.mzcr.cz) Covid-19 [data repository](https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19).
 
